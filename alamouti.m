@@ -45,7 +45,7 @@ for SNR = 0:25
     
 end
 
-
+%%s0 impares e s1 pares FALTA FAZER
 s0 = (conj(ganho_canal1).*r0) + (ganho_canal2.*conj(r1));
 s1 = (conj(ganho_canal2).*r0) - (ganho_canal1.*conj(r1));
 sinal1_demod = pskdemod(s0,M);
