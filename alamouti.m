@@ -38,16 +38,14 @@ ganho_canal2 = canal2.PathGains;
 
 for SNR = 0:25      
     %estimador
-    r0 = (ganho_canal1.*sinal_rx1) + (ganho_canal2.*sinal_rx2);
-    r0 = awgn(r0,SNR);
-    r1 = ( -ganho_canal1.*conj(sinal_rx2) ) + (ganho_canal2.*(sinal_rx1));
-    r1 = awgn(r1,SNR);
+    r = (ganho_canal1.*sinal_rx1) + (ganho_canal2.*sinal_rx2);
+    r = awgn(r,SNR);    
     
 end
 
-%%s0 impares e s1 pares FALTA FAZER
-s0 = (conj(ganho_canal1).*r0) + (ganho_canal2.*conj(r1));
-s1 = (conj(ganho_canal2).*r0) - (ganho_canal1.*conj(r1));
+
+s0 = (conj(ganho_canal1(1:2:end)).*r(1:2:end)) + (ganho_canal2(2:2:end).*conj(r(2:2:end)));
+s1 = (conj(ganho_canal2(2:2:end)).*r(1:2:end)) - (ganho_canal1(1:2:end).*conj(r(2:2:end)));
 sinal1_demod = pskdemod(s0,M);
 sinal2_demod = pskdemod(s1,M);
 
